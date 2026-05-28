@@ -1,0 +1,21 @@
+services:
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Containerfile
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000
+    extra_hosts:
+      - "host.container.internal:host-gateway"
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    networks:
+      - support-net
+
+networks:
+  support-net:
+    name: support-net
+    external: true
